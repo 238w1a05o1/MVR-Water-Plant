@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "MVR Water Plant"
+description = "A public-facing website for MVR Water Plant in Botlapalem, Andhra Pradesh, featuring its location, customer reviews, and directions."
+version = "1.0.0"
+id = "artifacts/mvr-water-plant"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24837
+
+[services.development]
+run = "pnpm --filter @workspace/mvr-water-plant run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/mvr-water-plant", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/mvr-water-plant/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24837"
+BASE_PATH = "/"
